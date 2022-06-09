@@ -1,4 +1,3 @@
-from operator import truediv
 from django.shortcuts import render
 from loja.models import Produto
 
@@ -24,3 +23,15 @@ def cadastrar_produto(request):
         produto.save()
         return render(template_name="index.html", request=request, context={'produto': produtos})
     
+def buscar_produto(request, nome):
+    if request.method == "GET":
+        busca = Produto.objects.filter(nome = nome)
+        return render(request, "index.html", {"produto": busca})
+    return render(request, "index.html", {"produto": produtos,"erro":"Produto não encontrado." })
+
+def deletar_produto(request, id):
+    if request.method == "GET":
+        produto = Produto.objects.filter(id=id)
+        produto.delete()
+        return render(request, "index.html", {"produto": produtos})
+    return render(request, "index.html", {"produto": produtos})

@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <title>Cadastro de Produto</title>
 </head>
+
 <body>
+    <h2 class="text-center p-2">Cadastrar novo produto</h2>
+    <div class="container-fluid">
+        <a href="/">
+            <button class="btn btn-primary mt-2" type="button">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+                </svg>
+            </button>
+        </a>
+    </div>
     <form method="post">
         {% csrf_token %}
         <div class="p-2">
@@ -20,14 +33,16 @@
                 <label for="imagem">Imagem</label>
             </div>
             <div class="form-floating ml-2 mb-3 mt-3" style="width: 300px;">
-                <input type="number" step="0.01" class="form-control" name="preco_unitario" id="preco_unitario" placeholder="Preço unitário">
+                <input type="number" step="0.01" class="form-control" name="preco_unitario" id="preco_unitario"
+                    placeholder="Preço unitário">
                 <label for="preco_unitario">Preço unitário</label>
             </div>
             <div class="form-floating ml-2 mb-3 mt-3" style="width: 300px;">
-                <input type="number" name="qtd_estoque" id="qtd_estoque" class="form-control" placeholder="Quantidade em estoque">
+                <input type="number" name="qtd_estoque" id="qtd_estoque" class="form-control"
+                    placeholder="Quantidade em estoque">
                 <label for="qtd_estoque">Quantidade em estoque</label>
             </div>
-            
+
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="ativo" name="ativo" value="ativo">
                 <label class="form-check-label" for="ativo">Ativo</label>
@@ -37,9 +52,14 @@
 
 
     </form>
-    
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
