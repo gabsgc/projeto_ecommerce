@@ -1,5 +1,8 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from loja.models import Produto
+from django.template import loader
 
 produtos = Produto.objects.all()
 
@@ -35,3 +38,24 @@ def deletar_produto(request, id):
         produto.delete()
         return render(request, "index.html", {"produto": produtos})
     return render(request, "index.html", {"produto": produtos})
+
+def editar(request, id):
+    produto = Produto.objects.get(id=id)
+    template = loader.get_template('editar.html')
+    context = {
+        'produto': produto,
+    }
+    return HttpResponse(template.render(context, request))
+  
+def atualizar_produto(request, id):
+    nome = request.POST['nome']
+    qtd_estoque = request.POST['qtd_estoque']
+    preco_unitario = request.POST['preco_unitario']
+    ativo = True
+    produto = Produto.objects.get(id=id)
+    produto.nome = nome
+    produto.qtd_estoque = qtd_estoque
+    produto.preco_unitario = preco_unitario
+    produto.ativo = ativo
+    produto.save()
+    return HttpResponseRedirect(reverse('index'))
