@@ -55,6 +55,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ produto.nome }}</h5>
                     <p class="card-text">R$ {{ produto.preco_unitario }}</p>
+                    <p class="badge bg-info m-2">{{ produto.qtd_estoque }} unidades disponíveis</p>
                     <div class="col">
                         <a href="{% url 'deletar_produto' produto.id %}" class="p-2">
                             <button class="btn btn-danger mt-2" type="button">
