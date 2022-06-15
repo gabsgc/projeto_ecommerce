@@ -7,7 +7,10 @@ from django.template import loader
 produtos = Produto.objects.all()
 
 def index(request):
-    return render(template_name="index.html", request=request, context={'produto': produtos})
+    return render(request, 'index.html', {'produto': produtos})
+
+def listar_produtos(request):
+    return render(request, 'index.html', {'produto': produtos})
 
 def cadastrar_produto(request):
     if request.method == "GET":
@@ -24,19 +27,18 @@ def cadastrar_produto(request):
         produto.imagem = request.POST.get('imagem', None)
         produto.ativo = ativo
         produto.save()
-        return render(template_name="index.html", request=request, context={'produto': produtos})
+        return render(template_name="index.html", request=request)
     
 def buscar_produto(request, nome):
     if request.method == "GET":
         busca = Produto.objects.filter(nome = nome)
         return render(request, "index.html", {"produto": busca})
-    return render(request, "index.html", {"produto": produtos,"erro":"Produto não encontrado." })
+    return render(request, "index.html", {"produto": busca})
 
 def deletar_produto(request, id):
-    if request.method == "GET":
+    if request.method == "DELETE":
         produto = Produto.objects.filter(id=id)
         produto.delete()
-        return render(request, "index.html", {"produto": produtos})
     return render(request, "index.html", {"produto": produtos})
 
 def editar(request, id):

@@ -10,7 +10,7 @@
     <title>Ecommerce</title>
 </head>
 
-<body>
+<body id="produtos-list">
     <div class="container-fluid">
         <a href="/" class="pl-2">
             <button class="btn btn-primary m-2" type="button">
@@ -55,21 +55,21 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ produto.nome }}</h5>
                     <p class="card-text">R$ {{ produto.preco_unitario }}</p>
-                    <p class="badge bg-info m-2">{{ produto.qtd_estoque }} unidades disponíveis</p>
+                    <p class="badge bg-info">{{ produto.qtd_estoque }} unidades disponíveis</p>
                     <div class="col">
-                        <a href="{% url 'deletar_produto' produto.id %}" class="p-2">
-                            <button class="btn btn-danger mt-2" type="button">
-                                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                                </svg>
-                                Deletar
-                            </button>
-                        </a>
+                        <button class="btn btn-danger mt-2" onclick="deletar('{{produto.id}}')">
+                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </svg>
+                            Deletar
+                        </button>
+
                         <a href="{% url 'atualizar' produto.id %}">
                             <button class="btn btn-primary mt-2" type="button">
                                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                    <path fill="currentColor"
+                                        d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
                                 </svg>
                                 Editar
                             </button>
@@ -81,6 +81,58 @@
         </div>
     </div>
 
+    <script>
+        xhr = new XMLHttpRequest();
+        if (xhr.open('GET', 'buscar_produtos', true)) {
+            xhr.send(null);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('produtos-list').innerHTML = xhr.response;
+                }
+            };
+        } else {
+            xhr.open('GET', 'produtos', false);
+            xhr.send(null);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('produtos-list').innerHTML = xhr.response;
+                }
+            };
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        function deletar(id) {
+            let httpRequest = new XMLHttpRequest();
+            httpRequest.open('DELETE', "{% url 'deletar_produto' id='REPLACE_ID'%}".replace("REPLACE_ID", id));
+            httpRequest.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        console.log(httpRequest.response);
+                    } else {
+                        alert(`Deu ruim! Status ${httpRequest.status}`);
+                    }
+                }
+            };
+            httpRequest.send();
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
         integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
         crossorigin="anonymous"></script>
@@ -89,4 +141,5 @@
         crossorigin="anonymous"></script>
 
 </body>
+
 </html>
